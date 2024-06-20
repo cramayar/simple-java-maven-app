@@ -6,6 +6,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                slackSend color: "good", message: "Message from Jenkins Pipeline"
                 sh 'mvn -B -DskipTests clean package'
             }
         }
