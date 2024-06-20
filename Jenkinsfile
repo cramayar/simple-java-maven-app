@@ -6,17 +6,6 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                def attachments = [
-                    [
-                    text: 'I find your lack of faith disturbing!',
-                    fallback: 'Hey, Vader seems to be mad at you.',
-                    color: '#ff0000'
-                    ]
-                ]
-
-                slackSend(channel: "#buildstatus", attachments: attachments)
-
-                slackSend color: "good", message: "Message from Jenkins Pipeline"
                 sh 'mvn -B -DskipTests clean package'
             }
         }
@@ -33,6 +22,7 @@ pipeline {
         stage('Deliver') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
+                slackSend color: "good", message: "Jenkins pipeline finished"
             }
         }
     }
